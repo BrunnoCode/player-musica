@@ -23,7 +23,7 @@ document.querySelector('.botao-pause').addEventListener('click', pausarMusica);
 
 musica.addEventListener('timeupdate', atualizarBarra);
 
-document.querySelector()
+
 
 function tocarMusica() {
     musica.play();
