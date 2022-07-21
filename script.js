@@ -8,6 +8,7 @@ let musicas = [
 
 
 let musica = document.querySelector('audio');
+let indexMusica = 0;
 
 let duracaoMusica = document.querySelector('.fim');
 
@@ -15,7 +16,8 @@ let imagem = document.querySelector('.img');
 let nomeMusica = document.querySelector('.descricao h2');
 let nomeArtista = document.querySelector('.descricao i');
 
-duracaoMusica.textContent = segundoParaMinutos(Math.floor(musica.duration));
+renderizarMusica(indexMusica);
+
 
 document.querySelector('.botao-play').addEventListener('click', tocarMusica);
 
@@ -23,6 +25,32 @@ document.querySelector('.botao-pause').addEventListener('click', pausarMusica);
 
 musica.addEventListener('timeupdate', atualizarBarra);
 
+document.querySelector('.anterior').addEventListener('click', () => {
+    indexMusica--;
+    if (indexMusica < 0) {
+        indexMusica = 2;
+    }
+    renderizarMusica(indexMusica);
+});
+
+document.querySelector('.proxima').addEventListener('click', () => {
+    indexMusica++;
+    if (indexMusica > 2) {
+        indexMusica = 0;
+    }
+    renderizarMusica(indexMusica);
+});
+
+function renderizarMusica(index){
+    musica.setAttribute('src', musicas[index].src);
+    musica.addEventListener('loadeddata', () => {
+        nomeMusica.textContent = musicas[index].titulo;
+        nomeArtista.textContent = musicas[index].artista;
+        imagem.src = musicas[index].img;
+        duracaoMusica.textContent = segundoParaMinutos(Math.floor(musica.duration));
+
+    });
+}
 
 
 function tocarMusica() {
@@ -54,3 +82,4 @@ function segundoParaMinutos(segundos) {
     
    return campoMinutos+':'+campoSegundos;
 }
+
